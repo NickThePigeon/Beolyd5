@@ -16,7 +16,7 @@ yarn install
 
 # Build the application
 echo ">>> Building Tauri application (this may take a while on Pi)..."
-cargo tauri build
+cargo tauri build --jobs 2
 
 echo ""
 echo "=== Build complete! ==="
