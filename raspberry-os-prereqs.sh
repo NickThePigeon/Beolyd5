@@ -18,7 +18,15 @@ sudo apt-get install -y build-essential pkg-config
 
 # Install prerequisite libraries for Tauri
 echo ">>> Installing Tauri dependencies..."
-sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev libsecret-1-dev
+# Try webkit2gtk-4.1 first (Debian Bookworm/newer), fall back to 4.0 (Debian Bullseye/older)
+if apt-cache show libwebkit2gtk-4.1-dev > /dev/null 2>&1; then
+    echo "Using webkit2gtk-4.1 (Debian Bookworm)"
+    sudo apt-get install -y libwebkit2gtk-4.1-dev
+else
+    echo "Using webkit2gtk-4.0 (Debian Bullseye)"
+    sudo apt-get install -y libwebkit2gtk-4.0-dev
+fi
+sudo apt-get install -y libappindicator3-dev libsecret-1-dev || true
 sudo apt-get install -y libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
 
 # Install hidapi for BeoSound5 controller

@@ -10,7 +10,7 @@ use super::types::*;
 
 /// Maximum volume limit for safety (protect speakers)
 /// Set to 50% to prevent accidental loud volume
-pub const MAX_VOLUME_LIMIT: u8 = 50;
+pub const MAX_VOLUME_LIMIT: u8 = 75;
 
 // ============================================================================
 // System Commands
