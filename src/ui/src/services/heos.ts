@@ -2,7 +2,7 @@
  * HEOS Service - TypeScript wrapper for Tauri HEOS commands
  */
 
-import { invoke } from "@tauri-apps/api/tauri";
+import { invoke } from "@tauri-apps/api/core";
 
 // ============================================================================
 // Types

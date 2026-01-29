@@ -4,10 +4,10 @@
 mod heos;
 mod hw_controller;
 
-use heos::{HeosClient, HeosConfig, MusicSource, MuteState, NowPlayingMedia, PlayState, Player};
+use heos::{HeosClient, HeosConfig, MusicSource, MuteState, NowPlayingMedia, Player};
 use hw_controller::HWController;
 use std::sync::Mutex;
-use tauri::{generate_context, Manager, State};
+use tauri::{Manager, State};
 
 // ============================================================================
 // Hardware Controller Commands
@@ -293,13 +293,14 @@ fn main() {
             heos_play_preset,
             heos_clear_queue,
         ])
+        .plugin(tauri_plugin_shell::init())
         .setup(|app| {
-            let app_handle = app.handle();
+            let app_handle = app.handle().clone();
 
             // In dev mode, make the window bigger for easier debugging
             #[cfg(debug_assertions)]
             {
-                if let Some(window) = app.get_window("main") {
+                if let Some(window) = app.get_webview_window("main") {
                     let _ = window.set_size(tauri::Size::Physical(tauri::PhysicalSize {
                         width: 1280,
                         height: 960,
@@ -319,6 +320,6 @@ fn main() {
 
             Ok(())
         })
-        .run(generate_context!())
+        .run(tauri::generate_context!())
         .expect("error while running BS5 controller UI application");
 }
