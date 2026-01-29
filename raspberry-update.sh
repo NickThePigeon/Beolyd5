@@ -4,8 +4,8 @@ set -e
 echo "=== Beolyd5 Update from GitHub ==="
 echo ""
 
-# GitHub repo
-REPO="larsbaunwall/beolyd5"
+# GitHub repo - change this to your fork
+REPO="NickThePigeon/Beolyd5"
 DEB_NAME="bs5-controller-ui_0.1.0_arm64.deb"
 
 # Get latest release download URL
