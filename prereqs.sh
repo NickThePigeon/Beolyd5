@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Increase swap for compiling on low-memory devices (Pi 3B+ has only 1GB)
+echo ">>> Configuring swap (needed for compiling)..."
+sudo dphys-swapfile swapoff 2>/dev/null || true
+sudo sed -i 's/CONF_SWAPSIZE=.*/CONF_SWAPSIZE=2048/' /etc/dphys-swapfile
+sudo dphys-swapfile setup
+sudo dphys-swapfile swapon
+
 # Update the package lists for upgrades and new package installations
 sudo apt-get update
 
@@ -22,8 +29,8 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # Add cargo to PATH
 source $HOME/.cargo/env
 
-# Install Tauri CLI v2
-cargo install tauri-cli --version "^2" --force
+# Install Tauri CLI v2 (limit jobs to avoid OOM on Pi)
+CARGO_BUILD_JOBS=1 cargo install tauri-cli --version "^2" --force
 
 # Install Xorg and Matchbox for GUI support
 sudo apt-get install -y xorg matchbox-window-manager
