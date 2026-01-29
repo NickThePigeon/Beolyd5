@@ -37,17 +37,48 @@ EOF
     echo "    Edit this file to set your HEOS device IP address"
 fi
 
+# Configure HDMI for BeoSound 5 display (no EDID)
+echo ">>> Configuring HDMI for BeoSound 5 display..."
+BOOT_CONFIG="/boot/config.txt"
+
+# Backup config.txt if not already backed up
+if [ ! -f "${BOOT_CONFIG}.backup" ]; then
+    sudo cp "$BOOT_CONFIG" "${BOOT_CONFIG}.backup"
+    echo "    Backed up config.txt"
+fi
+
+# Remove any existing HDMI settings to avoid conflicts
+sudo sed -i '/^hdmi_force_hotplug/d' "$BOOT_CONFIG"
+sudo sed -i '/^hdmi_ignore_edid/d' "$BOOT_CONFIG"
+sudo sed -i '/^hdmi_group/d' "$BOOT_CONFIG"
+sudo sed -i '/^hdmi_mode/d' "$BOOT_CONFIG"
+sudo sed -i '/^hdmi_drive/d' "$BOOT_CONFIG"
+sudo sed -i '/^config_hdmi_boost/d' "$BOOT_CONFIG"
+sudo sed -i '/^disable_overscan/d' "$BOOT_CONFIG"
+
+# Add BeoSound 5 HDMI configuration
+sudo tee -a "$BOOT_CONFIG" > /dev/null << 'EOF'
+
+# BeoSound 5 Display Configuration (no EDID)
+hdmi_force_hotplug=1
+hdmi_ignore_edid=0xa5000080
+hdmi_group=2
+hdmi_mode=16
+hdmi_drive=2
+config_hdmi_boost=4
+disable_overscan=1
+EOF
+
+echo "    HDMI configured for 1024x768 @ 60Hz"
+
 echo ""
 echo "=== Installation complete! ==="
 echo ""
-echo "Next steps:"
-echo "1. Configure HDMI (if not done):"
-echo "   sudo nano /boot/config.txt"
-echo "   Add: hdmi_group=2"
-echo "   Add: hdmi_mode=16"
+echo "HDMI has been configured for BeoSound 5 (1024x768, no EDID)."
 echo ""
-echo "2. Configure auto-start:"
+echo "Next steps:"
+echo "1. Configure auto-start:"
 echo "   ./raspberry-os-boot.sh"
 echo ""
-echo "3. Reboot:"
+echo "2. Reboot:"
 echo "   sudo reboot"
