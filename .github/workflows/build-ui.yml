@@ -32,6 +32,8 @@ jobs:
             libayatana-appindicator3-dev \
             librsvg2-dev \
             libsoup2.4-dev \
+            libudev-dev \
+            libhidapi-dev \
             pkg-config
 
       - name: Setup Node.js
