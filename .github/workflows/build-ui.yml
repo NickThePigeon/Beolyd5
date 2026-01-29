@@ -40,8 +40,8 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Install tauri-cli
-        run: cargo install tauri-cli
+      - name: Install tauri-cli v1
+        run: cargo install tauri-cli --version "^1"
 
       - name: Install frontend dependencies
         run: npm install
