@@ -298,16 +298,16 @@ fn main() {
             let app_handle = app.handle().clone();
 
             // In dev mode, make the window bigger for easier debugging
-            #[cfg(debug_assertions)]
-            {
-                if let Some(window) = app.get_webview_window("main") {
-                    let _ = window.set_size(tauri::Size::Physical(tauri::PhysicalSize {
-                        width: 1280,
-                        height: 960,
-                    }));
-                    let _ = window.set_resizable(true);
-                }
-            }
+            // #[cfg(debug_assertions)]
+            // {
+            //     if let Some(window) = app.get_webview_window("main") {
+            //         let _ = window.set_size(tauri::Size::Physical(tauri::PhysicalSize {
+            //             width: 1280,
+            //             height: 960,
+            //         }));
+            //         let _ = window.set_resizable(true);
+            //     }
+            // }
 
             // Initialize hardware controller
             let hw: HWController = HWController::new(app_handle.clone());
